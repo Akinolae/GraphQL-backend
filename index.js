@@ -6,6 +6,7 @@ const schemas = require("./schemas");
 const mongoose = require("mongoose");
 const customer = require("./model/index");
 const functions = require("./functions/index");
+const cors = require("cors");
 
 const URI = process.env.DB;
 const dbConfig = async () => {
@@ -62,6 +63,8 @@ var root = {
   //   };
   // },
 };
+
+app.use(cors());
 
 app.use(
   "/graphql",

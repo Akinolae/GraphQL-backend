@@ -9,6 +9,7 @@ type UserData {
     lastName: String!
     email: String!
     accountNumber: String!
+    accountBalance: String!
 }
 
 type Name {
@@ -20,9 +21,13 @@ type Info {
     country: String!
 }
 
+input NameInput {
+    name: String!
+}
+
 type Query {
     quoteOfTheDay: String
-    random(name: String!): [UserData]
+    random(name: String!): UserData
     rollThreeDice: [Int]
     userInfo: Info
     getUser: Name
@@ -31,7 +36,6 @@ type Query {
 type Mutation {
     user(input: UserInput): Name
 }
-  
   `;
 
 module.exports = schemas;

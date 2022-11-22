@@ -4,8 +4,8 @@ const random = async ({ name }) => {
   try {
     const res = await customer.find();
     const info =
-      res.find((user) => user.firstName.toLowerCase().includes(name)) || {};
-    console.log(info);
+      res.find((user) => user.firstName.toLowerCase() === name.toLowerCase()) ||
+      {};
     if (Object.keys(info).length === 0) throw "User does't exist";
     return {
       firstName: info.firstName,
