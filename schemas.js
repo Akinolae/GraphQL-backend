@@ -34,7 +34,7 @@ type Query {
 }
 
 type Mutation {
-    user(input: UserInput): Name
+    user(input: UserInput): UserData
 }
   `;
 
