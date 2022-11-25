@@ -45,7 +45,7 @@ const resolvers = {
   Mutation: {
     user: async (parent, args, context) => {
       const { firstName, lastName } = args.input;
-      console.log({ context });
+      //   console.log({ context });
 
       if (
         !firstName ||
