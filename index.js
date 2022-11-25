@@ -2,8 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const { buildSchema } = require("graphql");
 const { graphqlHTTP } = require("express-graphql");
-const schemas = require("./schemas");
-const functions = require("./functions/index");
+const schemas = require("./graphql/schemas");
+const resolvers = require("./graphql/resolvers");
 const cors = require("cors");
 const { dbConfig } = require("./config/dbConfig");
 
@@ -16,7 +16,7 @@ app.use(
   "/users/graphql",
   graphqlHTTP({
     schema: schema,
-    rootValue: { ...functions },
+    rootValue: { ...resolvers },
     graphiql: true,
     pretty: true,
     customFormatErrorFn: (error) => error.message,
