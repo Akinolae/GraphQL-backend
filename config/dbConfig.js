@@ -13,7 +13,7 @@ const dbConfig = async () => {
       useFindAndModify: false,
       useCreateIndex: true,
     });
-    console.log("==== Connection established ====");
+    console.log("==== DB Connection established ====");
     return true;
   } catch (error) {
     console.error(error);

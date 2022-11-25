@@ -1,4 +1,4 @@
-const schemas = `
+const schemas = `#graphql
 input UserInput {
     firstName: String!
     lastName: String!
