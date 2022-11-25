@@ -1,11 +1,10 @@
-require("dotenv").config();
-const express = require("express");
-const { buildSchema } = require("graphql");
-const { graphqlHTTP } = require("express-graphql");
-const schemas = require("./graphql/schemas");
-const resolvers = require("./graphql/resolvers");
-const cors = require("cors");
-const { dbConfig } = require("./config/dbConfig");
+import express from "express";
+import { buildSchema } from "graphql";
+import { graphqlHTTP } from "express-graphql";
+import schemas from "./graphql/schemas.js";
+import resolvers from "./graphql/resolvers.js";
+import cors from "cors";
+import { dbConfig } from "./config/dbConfig.js";
 
 const app = express();
 const schema = buildSchema(`${schemas}`);

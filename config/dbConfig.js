@@ -1,4 +1,7 @@
-const mongoose = require("mongoose");
+import dotEnv from "dotenv";
+dotEnv.config();
+
+import mongoose from "mongoose";
 
 const URI = process.env.DB;
 
@@ -18,4 +21,4 @@ const dbConfig = async () => {
   }
 };
 
-module.exports = { dbConfig };
+export { dbConfig };

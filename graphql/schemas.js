@@ -31,11 +31,11 @@ type Query {
     rollThreeDice: [Int]
     userInfo: Info
     getUser: Name
+    liveData: Int
 }
 
 type Mutation {
     user(input: UserInput): UserData
 }
   `;
-
-module.exports = schemas;
+export default schemas;

@@ -1,4 +1,6 @@
-const customer = require("../model/index");
+import customer from "../model/index.js";
+import fetch from "node-fetch";
+// const fetch = require("node-fetch");
 
 const random = async (parent, args, context) => {
   const { name } = parent;
@@ -28,6 +30,7 @@ const user = async (parent, args, context) => {
   )
     throw new Error("All fields are required");
   const res = await customer.find();
+  console.log(res);
   const info =
     res.find(
       (user) =>
@@ -45,7 +48,23 @@ const user = async (parent, args, context) => {
   }
 };
 
-module.exports = {
+const liveData = async () => {
+  console.log("called");
+  try {
+    const res = await fetch("https://api.apilayer.com/currency_data/live", {
+      headers: {
+        apikey: "LVERibMDMr46Hh7sEyzaoTIdEgWdE5q6",
+      },
+    });
+
+    return (await res.json()).quotes;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export default {
   random,
   user,
+  liveData,
 };
