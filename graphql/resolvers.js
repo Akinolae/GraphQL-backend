@@ -45,7 +45,8 @@ const resolvers = {
   Mutation: {
     user: async (parent, args, context) => {
       const { firstName, lastName } = args.input;
-      //   console.log({ context });
+      const { user } = context;
+      if (Object.keys(user).length === 0) return;
 
       if (
         !firstName ||
@@ -55,12 +56,7 @@ const resolvers = {
       )
         throw new Error("All fields are required");
       const res = await customer.find();
-      const info =
-        res.find(
-          (user) =>
-            user.firstName.toLowerCase() === firstName.toLowerCase() &&
-            user.lastName.toLowerCase() === lastName.toLowerCase()
-        ) || {};
+      const info = res.find(({ email }) => email === user.email) || {};
       if (Object.keys(info).length === 0) throw new Error("User doesn't exist");
       else {
         return {
