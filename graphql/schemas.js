@@ -6,6 +6,11 @@ input UserInput {
     lastName: String!
 }
 
+input Login {
+    username: String!
+    userPassword: String!
+}
+
 type UserData {
     firstName: String!
     lastName: String!
@@ -13,6 +18,12 @@ type UserData {
     accountNumber: String!
     accountBalance: String!
 }
+
+type LoginData {
+        email: String
+        token: String
+        has2fa: Boolean
+    }
 
 type Name {
     name: String
@@ -38,6 +49,7 @@ type Query {
 
 type Mutation {
     user(input: UserInput): UserData
+    login(input: Login) : LoginData
 }
   `;
 export default schemas;

@@ -1,6 +1,10 @@
 import customer from "../model/index.js";
 import fetch from "node-fetch";
 import { GraphQLError } from "graphql";
+import {
+  decryptPassword,
+  generateUserAccessToken,
+} from "../utils/validator.js";
 
 const resolvers = {
   Query: {
@@ -65,6 +69,33 @@ const resolvers = {
           email: res.email,
           accountNumber: res.accountNumber,
         };
+      }
+    },
+    login: async (parent, args, context) => {
+      const { username, userPassword } = args.input;
+      const res =
+        (await customer.find()).find(({ email }) => email === username) || {};
+
+      if (Object.keys(res).length === 0) throw new Error("User doesn't exist");
+      else {
+        const { email, password } = res;
+
+        const isValidUser =
+          email !== username ||
+          !(await decryptPassword(userPassword, password));
+        if (isValidUser) throw new Error("Invalid login parameters");
+        else {
+          const token = generateUserAccessToken({
+            id: res.id,
+            email: res.email,
+          });
+
+          return {
+            token,
+            has2fa: res["2faEnabled"],
+            email,
+          };
+        }
       }
     },
   },
