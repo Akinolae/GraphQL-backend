@@ -55,15 +55,15 @@ const resolvers = {
         typeof lastName === "undefined"
       )
         throw new Error("All fields are required");
-      const res = await customer.find();
-      const info = res.find(({ email }) => email === user.email) || {};
-      if (Object.keys(info).length === 0) throw new Error("User doesn't exist");
+      const res =
+        (await customer.find()).find(({ email }) => email === user.email) || {};
+      if (Object.keys(res).length === 0) throw new Error("User doesn't exist");
       else {
         return {
-          firstName: info.firstName,
-          lastName: info.lastName,
-          email: info.email,
-          accountNumber: info.accountNumber,
+          firstName: res.firstName,
+          lastName: res.lastName,
+          email: res.email,
+          accountNumber: res.accountNumber,
         };
       }
     },
