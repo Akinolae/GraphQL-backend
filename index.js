@@ -1,22 +1,29 @@
 import schemas from "./graphql/schemas.js";
 import resolvers from "./graphql/resolvers.js";
+import { error as graphQlError } from "./utils/errorUtils.js";
 import { dbConfig } from "./config/dbConfig.js";
 import { ApolloServer } from "@apollo/server";
-import { GraphQLError } from "graphql";
 import { verifyUserAccessToken } from "./utils/validator.js";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { ApolloServerPluginCacheControl } from "@apollo/server/plugin/cacheControl";
 
 const server = new ApolloServer({
   typeDefs: schemas,
   resolvers,
   formatError: (error) => error.message,
+  plugins: [
+    ApolloServerPluginCacheControl({
+      defaultMaxAge: 1,
+      calculateHttpHeaders: false,
+    }),
+  ],
 });
 
 const { url } = await startStandaloneServer(server, {
   context: async ({ req, res }) => {
     let user;
     if (!req.headers.authorization)
-      throw new GraphQLError("No token provided", {
+      throw graphQlError("No token provided", {
         extensions: {
           code: "UNAUTHENTICATED",
           http: { status: 401 },
@@ -27,7 +34,7 @@ const { url } = await startStandaloneServer(server, {
       try {
         user = verifyUserAccessToken(token);
       } catch (error) {
-        throw new GraphQLError(error, {
+        throw graphQlError(error, {
           extensions: {
             code: "UNAUTHENTICATED",
             http: { status: 401 },

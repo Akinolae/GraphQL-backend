@@ -1,48 +1,20 @@
 import customer from "../model/index.js";
-import fetch from "node-fetch";
-import { GraphQLError } from "graphql";
+import transactions from "../model/transactions.js";
 import {
   decryptPassword,
   generateUserAccessToken,
 } from "../utils/validator.js";
+import { error as graphqlError } from "../utils/errorUtils.js";
 
 const resolvers = {
   Query: {
-    liveData: async () => {
+    getTransactions: async (parent, args, context) => {
+      const { id } = context.user;
       try {
-        const res = await fetch(
-          "https://api.apilayer.com/currency_data/live?base=USD&symbols=EUR,GBP",
-          {
-            headers: {
-              apikey: "LVERibMDMr46Hh7sEyzaoTIdEgWdE5q6",
-            },
-          }
-        );
-
-        console.log(await res.json());
-        return (await res.json()).quotes;
+        const userTrx = (await transactions.find({ user_id: id })) || [];
+        return userTrx;
       } catch (error) {
-        throw new Error(error);
-      }
-    },
-    random: async (parent, args, context) => {
-      const { name } = parent;
-      if (!name || typeof name === "undefined")
-        throw new Error("Name is required");
-      const res = await customer.find();
-      const info =
-        res.find(
-          (user) => user.firstName.toLowerCase() === name.toLowerCase()
-        ) || {};
-      if (Object.keys(info).length === 0)
-        throw new GraphQLError("User doesn't exist");
-      else {
-        return {
-          firstName: info.firstName,
-          lastName: info.lastName,
-          email: info.email,
-          accountNumber: info.accountNumber,
-        };
+        throw graphqlError(error);
       }
     },
   },
@@ -72,6 +44,7 @@ const resolvers = {
       }
     },
     login: async (parent, args, context) => {
+      console.log(context);
       const { username, userPassword } = args.input;
       const res =
         (await customer.find()).find(({ email }) => email === username) || {};

@@ -19,32 +19,30 @@ type UserData {
     accountBalance: String!
 }
 
+type transactions {
+    transaction_id: String!
+    user_id: String!
+    transaction_type: String!
+    amount: Int!
+    description: String!
+    transaction_date: String!
+}
+
 type LoginData {
         email: String
         token: String
         has2fa: Boolean
     }
 
-type Name {
-    name: String
-}
 
-type Info {
-    name: String!
-    country: String!
-}
+
 
 input NameInput {
     name: String!
 }
 
 type Query {
-    quoteOfTheDay: String
-    random(name: String!): UserData
-    rollThreeDice: [Int]
-    userInfo: Info
-    getUser: Name
-    liveData: Int
+    getTransactions: [transactions]
 }
 
 type Mutation {
