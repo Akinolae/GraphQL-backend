@@ -1,9 +1,7 @@
-import dotEnv from "dotenv";
-dotEnv.config();
-
+import { extractConfig } from "../utils/extractENV.js";
 import mongoose from "mongoose";
 
-const URI = process.env.DB;
+const URI = extractConfig("uri");
 
 const dbConfig = async () => {
   try {
