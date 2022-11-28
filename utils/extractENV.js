@@ -2,10 +2,7 @@ import dotEnv from "dotenv";
 dotEnv.config();
 
 const config = {
-  node_env: process.env.NODE_ENV,
   uri: process.env.DB,
-  email: process.env.EMAIL,
-  password: process.env.EMAIL_PASSWORD,
 };
 
 const extractConfig = (param = "") => {
