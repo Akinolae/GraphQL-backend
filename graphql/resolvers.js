@@ -9,6 +9,7 @@ import { error as graphqlError } from "../utils/errorUtils.js";
 const resolvers = {
   Query: {
     getTransactions: async (parent, args, context) => {
+      console.log(context);
       const { id } = context.user;
       try {
         const userTrx = (await transactions.find({ user_id: id })) || [];
@@ -16,6 +17,9 @@ const resolvers = {
       } catch (error) {
         throw graphqlError(error);
       }
+    },
+    random: async (params) => {
+      console.log(params);
     },
   },
   Mutation: {

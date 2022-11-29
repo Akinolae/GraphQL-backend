@@ -1,17 +1,17 @@
 import schemas from "./graphql/schemas.js";
 import resolvers from "./graphql/resolvers.js";
-import { error as graphQlError } from "./utils/errorUtils.js";
 import { dbConfig } from "./config/dbConfig.js";
 import { ApolloServer } from "@apollo/server";
-import { verifyUserAccessToken } from "./utils/validator.js";
-// import { startStandaloneServer } from "@apollo/server/standalone";
+import { error as graphQlError } from "./utils/errorUtils.js";
 import { ApolloServerPluginCacheControl } from "@apollo/server/plugin/cacheControl";
 import { startServerAndCreateLambdaHandler } from "@as-integrations/aws-lambda";
+
+dbConfig();
 
 const server = new ApolloServer({
   typeDefs: schemas,
   resolvers,
-  formatError: (error) => error.message,
+  formatError: (error) => graphQlError(error.message),
   plugins: [
     ApolloServerPluginCacheControl({
       defaultMaxAge: 1,
@@ -28,6 +28,3 @@ export const graphqlHandler = startServerAndCreateLambdaHandler(server, {
     };
   },
 });
-
-dbConfig();
-console.log(`app is running`);

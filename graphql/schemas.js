@@ -43,6 +43,7 @@ input NameInput {
 
 type Query {
     getTransactions: [transactions]
+    random: Int!
 }
 
 type Mutation {

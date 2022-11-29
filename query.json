@@ -1,9 +1,9 @@
 {
-  "httpMethod": "POST",
+  "httpMethod": "GET",
   "path": "/",
   "headers": {
     "content-type": "application/json"
   },
   "requestContext": {},
-  "body": "{\"operationName\": null, \"variables\": {}, \"query\": \"{ hello }\"}"
+  "body": "{\"variables\": {}, \"query\": \"{ query random { random} }\"}"
 }
