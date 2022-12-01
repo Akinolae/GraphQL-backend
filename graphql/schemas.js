@@ -1,5 +1,9 @@
 const schemas = `#graphql
 
+input Numbers {
+    firstNumber: Int!
+    secondtNumber: Int!
+}
 
 input UserInput {
     firstName: String!
@@ -43,7 +47,7 @@ input NameInput {
 
 type Query {
     getTransactions: [transactions]
-    random: Int!
+    random(input: Numbers): Int
 }
 
 type Mutation {
