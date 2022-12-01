@@ -20,6 +20,7 @@ const resolvers = {
     },
     random: async (params) => {
       console.log(params);
+      return 1;
     },
   },
   Mutation: {

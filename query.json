@@ -5,5 +5,5 @@
     "content-type": "application/json"
   },
   "requestContext": {},
-  "body": "{\"variables\": {}, \"query\": \"{ query random { random} }\"}"
+  "body": "{\"operationName\": null, \"query\": \"{ \"random\" }\"}"
 }

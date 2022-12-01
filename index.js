@@ -22,6 +22,7 @@ const server = new ApolloServer({
 
 export const graphqlHandler = startServerAndCreateLambdaHandler(server, {
   context: async ({ event, context }) => {
+    console.log({ event, context });
     return {
       lambdaEvent: event,
       lambdaContext: context,

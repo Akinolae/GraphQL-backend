@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "pre-run": "serverless invoke local -f graphql -p query.json",
+    "run-local": "serverless offline start"
   },
   "repository": {
     "type": "git",
@@ -38,5 +40,11 @@
     "mongoose": "^5.13.7",
     "node-fetch": "^3.3.0",
     "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "serverless-offline": "^11.6.0",
+    "serverless-webpack": "^5.11.0",
+    "webpack": "^5.75.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
